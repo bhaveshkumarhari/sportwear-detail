@@ -1,0 +1,1 @@
+web: gunicorn sportsweararena.wsgi --log-file -
