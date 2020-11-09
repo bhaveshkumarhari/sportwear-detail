@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="ps-content pt-80 pb-80">
+    <div class="ps-container">
+
+      <!-- <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Your order was successful!</h4><br>
+        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+        <hr>
+        <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+      </div> -->
+      
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible show" role="alert">
+            {{ message }}
+            <br><br>
+            <p>{{request.user.first_name}} {{request.user.last_name}}, thank you for your order!</p>
+            <hr>
+            <p class="mb-0">We've received your order and will contact you as soon as your package is shipped. You can find your purchase information below.</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      
+        <h3 class="ps-section__title">Your Orders</h3>
+      <div class="ps-cart-listing">
+        <table class="table ps-cart__table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th>All Products</th>
+              <!-- <th>Size</th> -->
+              <th>Price</th>
+              <th>Discount Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order_item in orders %}
+            {% for item in order_item.items.all %}
+            <tr>
+              <td scope="row">{{ forloop.counter }}</td>
+              <td><a class="ps-product__preview" href="{{ item.item.get_absolute_url }}"><img class="mr-15" width="80" height="80" src="{{ item.item.front_image.url }}" alt=""> {{ item.item.title }}</a></td>
+              <!-- <td>{{ order_item.size}}</td> -->
+              <td>&#8377;{{ item.item.price }}</td>
+              <td>{% if item.item.discount_price %}&#8377;{{ item.item.discount_price }} {% else %} - {% endif %}</td>
+              <td>{{ item.quantity }}</td>
+              <td>
+                <!-- check the condition if item has discount price -->
+                {% if item.item.discount_price %}
+                    <!-- get the return value from OrderItem model function-->
+                    &#8377;{{ item.get_total_discount_item_price }}
+                    <span class="badge badge-primary">Saved &#8377;{{ item.get_amount_saved }}</span>
+                {% else %}
+                    <!-- get the return value from OrderItem model function-->
+                    &#8377;{{ item.get_total_item_price }}
+                {% endif %}
+              </td>
+              <td><label class="label label-{{ order_item.label }}">{{ order_item.status }}</label></td>
+              
+            </tr>
+            {% endfor %}
+            {% empty %}
+            <tr>
+                <td colspan='5'> You do not have any order.</td>
+            </tr>
+            <!-- <tr>
+              <td colspan="5">
+                <button class="ps-btn ps-btn--gray">Continue Shopping</button>
+              </td>
+            </tr> -->
+            
+            {% endfor %}
+     
+          </tbody>
+        </table>
+        <div class="ps-cart__actions">
+          <div class="ps-cart__promotion">
+            <!-- <div class="form-group">
+              <div class="ps-form--icon"><i class="fa fa-angle-right"></i>
+                <input class="form-control" type="text" placeholder="Promo Code">
+              </div>
+            </div> -->
+            <div class="form-group">
+              <a href="/" class="ps-btn ps-btn--gray">Continue Shopping</a>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

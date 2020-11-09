@@ -1,0 +1,66 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+
+
+<br>
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+
+						<div class="col-md-3">
+							<div class="card card-body">
+							
+								<hr>
+								<h3 style="text-align: center">Account Settings</h3>
+								<hr>
+								<img class="profile-pic" src="{{request.user.customerprofile.profile_pic.url}}" >
+								<hr>
+								<h5 style="text-align: center">Position: Superuser</h5>
+							
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card card-body">
+								
+								<form method="POST" action="" enctype="multipart/form-data">
+									{% csrf_token %}
+									{{form.as_p}}
+							
+								<input class="btn btn-primary" type="submit" name="Update Information">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    const firstName = document.getElementById("id_first_name");
+	const lastName = document.getElementById("id_last_name");
+    const Phone = document.getElementById("id_phone");
+    const Email = document.getElementById("id_email");
+    const Picture = document.getElementById("id_profile_pic");
+    firstName.className += 'form-control';
+    lastName.className += 'form-control';
+	Phone.className += 'form-control';
+    Email.className += 'form-control';
+    Picture.className += 'form-control';
+</script>
+{% endblock content %}

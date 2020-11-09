@@ -1,0 +1,166 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+{% endblock extra_head %}
+
+{% block content %}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="pt-4">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} background-{{ message.tags }}" role="alert">
+                      {{ message }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="icofont icofont-close-line-circled text-white"></i>
+                      </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="page-wrapper">
+                <!-- Page-header start -->
+                <div class="page-header">
+                    <div class="row align-items-end">
+                        
+                        <div class="col-lg-8">
+                            <div class="page-header-title">
+                                <div class="d-inline">
+                                    <h4>Customer List</h4>
+                                    <!-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="page-header-breadcrumb">
+                                <ul class="breadcrumb-title">
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'dashboard:dashboard-home' %}"> <i class="feather icon-home"></i> </a>
+                                    </li>
+                                    <!-- <li class="breadcrumb-item"><a href="#!">E-Commerce</a>
+                                    </li> -->
+                                    <li class="breadcrumb-item"><a href="#!">Customer List</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page-header end -->
+
+                    <!-- Page body start -->
+                    <div class="page-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Product list card start -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Our Customers</h5>
+                                        <!-- <button type="button" class="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i class="icofont icofont-plus m-r-5"></i> Add Product
+                </button> -->
+                                        <!-- <a href="{% url 'dashboard:create-product' %}"><button type="button" class="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger"> <i class="icofont icofont-plus m-r-5"></i> Add Product -->
+                                        </button></a>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="">
+                                            <div class="table-content">
+                                                <div class="project-table">
+                                                    <table id="myTable" class="table table-striped dt-responsive nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>First name</th>
+                                                                <th>Last name</th>
+                                                                <th>Username</th>
+                                                                <th>Email</th>
+                                                                <th>Phone</th>
+                                                                <!-- <th>Amount</th>
+                                                                <th>Discount Price</th>
+                                                                <th>Stock</th> -->
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for user in users %}
+                                                            <tr>
+                                                                
+                                                                <td>{{user.customerprofile.first_name}}</td>
+                                                                <td>{{user.customerprofile.last_name}}</td>
+                                                                <td>{{user.customerprofile.user}}</td>
+                                                                <td>{{user.customerprofile.email}}</td>
+                                                                <td>{{user.customerprofile.phone}}</td>
+                                                            
+                                                                <td class="action-icon">
+                                                                    <a href="{% url 'dashboard:customer-profile' user %}" class="m-r-15" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"><i class="icofont icofont-eye-alt"></i></a>
+                                                                    <!-- <a href="{{ item.get_delete_product_url }}"  class="text-muted" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="icofont icofont-delete-alt"></i></a> -->
+                  
+                                                                    <!-- <a href="{{ item.get_delete_product_url }}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{item.slug}}"><i class="icofont icofont-delete-alt"></i></a>    -->
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                         </tbody>
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product list card end -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Page body end -->
+                </div>
+            </div>
+            <!-- Main-body end -->
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+
+    <!--Delete button will redirect to the href of the element with 'id = caller-id' property in this modal-->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-body confirm-delete">
+                Are you sure want to delete this product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Delete</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block extra_scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+
+<script>
+    $(document).on('click', '.confirm-delete', function () {
+        $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+    });
+
+    $(document).on('click', '#confirmDeleteButtonModal', function () {
+        var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+        window.location = $("#".concat(caller)).attr("href");
+    });
+</script>
+{% endblock extra_scripts %}
+               

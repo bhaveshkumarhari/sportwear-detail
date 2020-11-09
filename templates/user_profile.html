@@ -1,0 +1,701 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard\assets\css\infostyle.css' %}">
+{% endblock extra_head %}
+
+{% block message %}
+<div class="mt-6 pt-4">
+  {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+  {% endif %}
+  </div>
+{% endblock message %}
+
+{% block content %}
+
+<div class="ps-product--detail pt-60">
+<div class="ps-container">
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                    <!-- Page-body start -->
+                    <div class="page-body">
+                        <!--profile cover start-->
+                      
+                        <!--profile cover end-->
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <!-- tab header end -->
+                                
+                                <!-- tab content start -->
+                                <div class="tab-content">
+                                    <!-- tab panel personal start -->
+                                    <div class="tab-pane active" id="personal" role="tabpanel">
+                                        <!-- personal card start -->
+                                        <div class="card">
+                                            <div class="card-header" style="padding: 15px;">
+                                                <h5 class="card-header-text">User Account</h5>
+                                                <button id="info-edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                    Edit
+                                                </button>
+                                            </div>
+                                            <div class="card-block">
+                                                <div class="view-info">
+                                                    <div class="row">
+                                                        
+                                                        <div class="col-lg-12">
+                                                            
+                                                            <div class="general-info">
+                                                                
+                                                                <div id="info-table">
+                                                                   
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-xl-2">
+                                                                        
+                                                                        <img class="profile-pic" src="{{request.user.customerprofile.profile_pic.url}}" >
+                            
+                                                                    </div>
+
+
+                                                                    <div class="col-lg-12 col-xl-5">
+                                                                        
+                                                                        <div class="table-responsive">
+                                                                           
+                                                                            <table id="info-get-table1" class="table m-0">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <th scope="row"><strong>First Name</strong></th>
+                                                                                        <td>{{request.user.customerprofile.first_name}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row"><strong>Last Name</strong></th>
+                                                                                        <td>{{request.user.customerprofile.last_name}}</td>
+                                                                                    </tr>
+                                                                                  
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                            
+                                                                    </div>
+                                                                    <!-- end of table col-lg-6 -->
+                                                                    <div class="col-lg-12 col-xl-5">
+                                                                        <div class="table-responsive">
+                                                                            <table id="info-get-table2" class="table">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <th scope="row"><strong>Email</strong></th>
+                                                                                        <td>{{request.user.customerprofile.email}}</td>
+                                                                                        <!-- <td><a href="#!"><span class="__cf_email__" data-cfemail="4206272f2d02273a232f322e276c212d2f">[email&#160;protected]</span></a></td> -->
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row"><strong>Mobile Number</strong></th>
+                                                                                        <td>{{request.user.customerprofile.phone}}</td>
+                                                                                    </tr>
+                                                                           
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- end of table col-lg-6 -->
+                                                                </div>
+                                                            </div>
+                                                       
+                                                                <!-- end of row -->
+                                                                <br>
+                                                                <div id="info-form" style="display: none;">
+                                                                <form method="POST" enctype="multipart/form-data">
+                                                                 
+                                                                    
+                                                                {% csrf_token %}
+                                                                <div class="row">
+                                                                    
+                                                                    <div class="col-lg-12 col-xl-6">
+                                                                        <div class="">
+                                                                            <div class="form-group row">
+                                                                                <label class="col-sm-5 col-form-label">First Name</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- <input type="text" name="first_name" id="info-firstname" required class="form-control"> -->
+                                                                                    {{userform.first_name}}
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label class="col-sm-5 col-form-label">Last Name</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- <input type="text" name="last_name" id="info-lastname" required class="form-control"> -->
+                                                                                    {{userform.last_name}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                            
+                                                                    </div>
+                                                                    <!-- end of table col-lg-6 -->
+                                                                    <div class="col-lg-12 col-xl-6">
+                                                                        <div class="">
+                                                                            <div class="form-group row">
+                                                                                <label class="col-sm-5 col-form-label">Email</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- <input type="text" name="email" id="info-email" required class="form-control"> -->
+                                                                                    {{userform.email}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label class="col-sm-5 col-form-label">Mobile Number</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- <input type="text" name="phone" id="info-phone" class="form-control"> -->
+                                                                                    {{userform.phone}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label class="col-sm-5 col-form-label">Picture</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <!-- <input type="text" name="phone" id="info-phone" class="form-control"> -->
+                                                                                    {{userform.profile_pic}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <button id="info-save-btn" type="submit" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                    Save changes
+                                                                </button>
+
+                                                                <button id="info-cancel-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                    Cancel
+                                                                </button>
+                                                                </form>
+                                                                    <!-- end of table col-lg-6 -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- end of general info -->
+                                                        </div>
+                                                        <!-- end of col-lg-12 -->
+                                                    </div>
+                                                    <!-- end of row -->
+                                                </div>
+                                                <!-- end of view-info -->
+                                                <div class="edit-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="general-info">
+                                                                <div class="row">
+                                                                  
+                                                                </div>
+                                                                <!-- end of row -->
+                                                                <!-- <div class="text-center">
+                                                                    <a href="#!" class="btn btn-primary waves-effect waves-light m-r-20">Save</a>
+                                                                    <a href="#!" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
+                                                                </div> -->
+                                                            </div>
+                                                            <!-- end of edit info -->
+                                                        </div>
+                                                        <!-- end of col-lg-12 -->
+                                                    </div>
+                                                    <!-- end of row -->
+                                                </div>
+                                                <!-- end of edit-info -->
+                                            </div>
+                                            <!-- end of card-block -->
+                                        </div>
+                                        <div class="card">
+                                            <!-- <div class="card-header">
+                                                <h5 class="card-header-text">Customer's Address</h5>
+                                                <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                            <i class="icofont icofont-edit"></i>
+                        </button>
+                                            </div> -->
+                                            <div class="card-block">
+                                                <div class="view-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="general-info">
+                                                                <div class="row">
+                                                                    
+                                                                    <div class="col-lg-12 col-xl-6">
+                                                                        {% if shipping_address %}
+                                                                        <h5 class="card-header-text">Shipping Address</h5>
+                                                                        <button id="shipping-edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                            Edit
+                                                                        </button>
+                                                                        <div class="table-responsive" id="shipping-table">
+                                                                            <table id="shipping-get-table" class="table m-0">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <th scope="row">Street Address</th>
+                                                                                        <td>{{shipping_address.street_address}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">Apartment Address</th>
+                                                                                        <td>{{shipping_address.apartment_address}}</td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    <tr>
+                                                                                        <th scope="row">Zip Code</th>
+                                                                                        <td>{{shipping_address.zip}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">State</th>
+                                                                                        <td>{{shipping_address.state}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">Country</th>
+                                                                                        <td>{{shipping_address.country.name}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        
+                                                                        {% else %}
+
+                                                                        <div id="shipping-not-available">
+                                                                            <h5 class="card-header-text">Default shipping Address is not available</h5>
+                                                                            <button id="shipping-add-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                                Add
+                                                                            </button>
+                                                                            <button id="shipping-minus-btn" style="display: none;" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                                Cancel
+                                                                            </button>
+                                                                        </div>
+                                                                        <br><br>
+
+                                                                        {% endif %}
+
+                                                                        <div id="shipping-form" style="display: none;">
+                                                                            <div class="card-block">
+                                                                            
+                                                                                <form method="POST" action="{% url 'core:shipping-address' %}">
+                                                                                    {% csrf_token %}
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Street Address</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="shipping_address" id="shipping-street-address" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Apartment Address</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="shipping_address2" id="shipping-apartment-address" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Zip Code</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="shipping_zip" id="shipping-zip" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">State</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="shipping_state" id="shipping-state" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Country</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <!-- <input type="text" name="shipping_country" id="shipping-country" required class="form-control"> -->
+                                                                                            {{shippingform.shipping_country}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <input type="checkbox" class="custom-control-input" name="same_billing_address" id="same_billing_address"> &nbsp;
+                                                                                        <label class="custom-control-label" for="same_billing_address">Billing address is the same as my shipping address</label>
+                                                                                    </div>
+
+                                                                                
+                                                                                    <button id="shipping-edit-btn" type="submit" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                                        Save changes
+                                                                                    </button>
+
+                                                                                    <button id="shipping-cancel-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                                        Cancel
+                                                                                    </button>
+                                                                                    
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+
+                                                                
+
+                                                                    </div>
+                                                                    
+                                                                    <!-- end of table col-lg-6 -->
+                                                                    
+                                                                    <div class="col-lg-12 col-xl-6">
+                                                                        {% if billing_address %}
+                                                                        <h5 class="card-header-text">Billing Address</h5>
+                                                                        <button id="billing-edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                            Edit
+                                                                        </button>
+                                                                        <div class="table-responsive" id="billing-table">
+                                                                            <table id="billing-get-table" class="table m-0">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <th scope="row">Street Address</th>
+                                                                                        <td>{{billing_address.street_address}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">Apartment Address</th>
+                                                                                        <td>{{billing_address.apartment_address}}</td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    <tr>
+                                                                                        <th scope="row">Zip Code</th>
+                                                                                        <td>{{billing_address.zip}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">State</th>
+                                                                                        <td>{{billing_address.state}}</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th scope="row">Country</th>
+                                                                                        <td>{{billing_address.country.name}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        
+                                                                        
+                                                                        {% else %}
+                                                                        <div id="billing-not-available">
+                                                                            <h5 class="card-header-text">Default billing Address is not available</h5>
+                                                                            <button id="billing-add-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                                Add
+                                                                            </button>
+                                                                            <button id="billing-minus-btn" style="display: none;" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+                                                                                Cancel
+                                                                            </button>
+                                                                        </div>
+                                                                        <br><br>
+                                                                        
+                                                                        {% endif %}
+
+                                                                        <div id="billing-form" style="display: none;">
+                                                                            <div class="card-block">
+                                                                            
+                                                                                <form method="POST" action="{% url 'core:billing-address' %}">
+                                                                                    {% csrf_token %}
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Street Address</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="billing_address" id="billing-street-address" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Apartment Address</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="billing_address2" id="billing-apartment-address" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Zip Code</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="billing_zip" id="billing-zip" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">State</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <input type="text" name="billing_state" id="billing-state" required class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-sm-5 col-form-label">Country</label>
+                                                                                        <div class="col-sm-7">
+                                                                                            <!-- <input type="text" name="billing_country" id="billing-country" required class="form-control"> -->
+                                                                                            {{billingform.billing_country}}
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <input type="checkbox" class="custom-control-input" name="same_shipping_address" id="same_shipping_address"> &nbsp;
+                                                                                        <label class="custom-control-label" for="same_shipping_address">Shipping address is the same as my billing address</label>
+                                                                                    </div>
+                                                                                
+                                                                                    <button id="billing-edit-btn" type="submit" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                                        Save changes
+                                                                                    </button>
+
+                                                                                    <button id="billing-cancel-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right" style="margin: 5px;">
+                                                                                        Cancel
+                                                                                    </button>
+                                                                                    
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        
+                                                                    </div>
+                                                                  
+                                                                    <!-- end of table col-lg-6 -->
+                                                                </div>
+                                                                <!-- end of row -->
+                                                            </div>
+                                                            <!-- end of general info -->
+                                                        </div>
+                                                        <!-- end of col-lg-12 -->
+                                                    </div>
+                                                    <!-- end of row -->
+                                                </div>
+                                             
+                                            </div>
+                                            <!-- end of card-block -->
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                                <!-- tab content end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+            </div>
+            <!-- Main body end -->
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    const firstName = document.getElementById("id_first_name");
+    const LastName = document.getElementById("id_last_name");
+    const Email = document.getElementById("id_email");
+    const Phone = document.getElementById("id_phone");
+    firstName.className += 'form-control';
+    LastName.className += 'form-control';
+    Email.className += 'form-control';
+    Phone.className += 'form-control';
+</script>
+
+<script>
+    const infoEditButton = document.getElementById("info-edit-btn");
+    const infoTable = document.getElementById("info-table");
+    const infoForm = document.getElementById("info-form");
+    const infoCancelButton = document.getElementById("info-cancel-btn");
+
+    const infoGetTable1 = document.getElementById("info-get-table1").rows[0].cells[1].innerHTML
+    const infoGetTable2 = document.getElementById("info-get-table1").rows[1].cells[1].innerHTML
+
+    const infoGetTable3 = document.getElementById("info-get-table2").rows[0].cells[1].innerHTML
+    const infoGetTable4 = document.getElementById("info-get-table2").rows[1].cells[1].innerHTML
+
+    const infoField1 = document.getElementById("id_first_name");
+    const infoField2 = document.getElementById("id_last_name");
+    const infoField3 = document.getElementById("id_email");
+    const infoField4 = document.getElementById("id_phone");
+
+    infoEditButton.addEventListener("click", function() {
+        // document.getElementById("billing-form").style.display = "none";
+        // document.getElementById("billing-minus-btn").style.display ="none";
+        // document.getElementById("shipping-form").style.display = "none";
+        // document.getElementById("shipping-minus-btn").style.display ="none";
+        // document.getElementById("billing-add-btn").style.display ="block";
+        // document.getElementById("shipping-add-btn").style.display ="block";
+
+        infoTable.style.display = "none";
+        infoEditButton.style.display = "none";
+        infoForm.style.display = "block";
+        billingTable.style.display = "block";
+        billingEditButton.style.display = "block";
+        billingForm.style.display = "none";
+
+        shippingTable.style.display = "block";
+        shippingEditButton.style.display = "block";
+        shippingForm.style.display = "none";
+
+        // infoField1.value = infoGetTable1;
+        // infoField2.value = infoGetTable2;
+        // infoField3.value = infoGetTable3;
+        // infoField4.value = infoGetTable4;
+
+        infoGetTable1 = infoField1.value;
+        infoGetTable2 = infoField2.value;
+        infoGetTable3 = infoField3.value;
+        infoGetTable4 = infoField4.value;
+
+    });
+
+    infoCancelButton.addEventListener("click", function() {
+        infoForm.style.display = "none";
+        infoTable.style.display = "block";
+        infoEditButton.style.display = "block";
+    });
+</script>
+
+<script>
+    const shippingAddButton = document.getElementById("shipping-add-btn");
+    const shippingAddForm = document.getElementById("shipping-form");
+    const shippingMinusButton = document.getElementById("shipping-minus-btn");
+    
+    shippingAddButton.addEventListener("click", function() {
+        document.getElementById("shipping-cancel-btn").style.display = "none";
+        // document.getElementById("billing-form").style.display = "none";
+        // document.getElementById("billing-minus-btn").style.display ="none";
+        // document.getElementById("info-form").style.display = "none";
+        // document.getElementById("info-table").style.display = "block";
+        // document.getElementById("info-edit-btn").style.display = "block";
+        // document.getElementById("billing-add-btn").style.display ="block";
+        shippingAddButton.style.display = "none";
+        shippingAddForm.style.display = "block";
+        shippingMinusButton.style.display = "block";
+
+    });
+
+    shippingMinusButton.addEventListener("click", function() {
+        shippingAddForm.style.display = "none";
+        shippingMinusButton.style.display = "none";
+        shippingAddButton.style.display = "block";
+    });
+
+</script>
+
+<script>
+    const billingAddButton = document.getElementById("billing-add-btn");
+    const billingAddForm = document.getElementById("billing-form");
+    const billingMinusButton = document.getElementById("billing-minus-btn");
+
+    billingAddButton.addEventListener("click", function() {
+        billingAddButton.style.display = "none";
+        document.getElementById("billing-cancel-btn").style.display = "none";
+        // document.getElementById("shipping-form").style.display = "none";
+        // document.getElementById("shipping-minus-btn").style.display ="none";
+        // document.getElementById("info-form").style.display = "none";
+        // document.getElementById("info-table").style.display = "block";
+        // document.getElementById("info-edit-btn").style.display = "block";
+        // document.getElementById("shipping-add-btn").style.display ="block";
+        billingAddForm.style.display = "block";
+        billingMinusButton.style.display = "block";
+
+    });
+
+    billingMinusButton.addEventListener("click", function() {
+        billingAddForm.style.display = "none";
+        billingMinusButton.style.display = "none";
+        billingAddButton.style.display = "block";
+    });
+
+</script>
+
+<script>
+
+    const shippingEditButton = document.getElementById("shipping-edit-btn");
+    const shippingTable = document.getElementById("shipping-table");
+    const shippingForm = document.getElementById("shipping-form");
+    
+    const shippingGetTable1 = document.getElementById("shipping-get-table").rows[0].cells[1].innerHTML
+    const shippingGetTable2 = document.getElementById("shipping-get-table").rows[1].cells[1].innerHTML
+    const shippingGetTable3 = document.getElementById("shipping-get-table").rows[2].cells[1].innerHTML
+    const shippingGetTable4 = document.getElementById("shipping-get-table").rows[3].cells[1].innerHTML
+    const shippingGetTable5 = document.getElementById("shipping-get-table").rows[4].cells[1].innerHTML
+    
+    const shippingAddressField1 = document.getElementById("shipping-street-address");
+    const shippingAddressField2 = document.getElementById("shipping-apartment-address");
+    const shippingAddressField3 = document.getElementById("shipping-zip");
+    const shippingAddressField4 = document.getElementById("shipping-state");
+    const shippingAddressField5 = document.getElementById("id_shipping_country");
+
+    const shippingCancelButton = document.getElementById("shipping-cancel-btn");
+
+
+    shippingEditButton.addEventListener("click", function() {
+        shippingTable.style.display = "none";
+        shippingEditButton.style.display = "none";
+        // billingForm.style.display = "none";
+        // billingTable.style.display = "block";
+        // billingEditButton.style.display = "block";
+        shippingForm.style.display = "block";
+
+        infoForm.style.display = "none";
+        infoTable.style.display = "block";
+        infoEditButton.style.display = "block";
+
+        shippingAddressField1.value = shippingGetTable1;
+        shippingAddressField2.value = shippingGetTable2;
+        shippingAddressField3.value = shippingGetTable3;
+        shippingAddressField4.value = shippingGetTable4;
+        shippingAddressField5.value = shippingGetTable5;
+
+    });
+
+    shippingCancelButton.addEventListener("click", function() {
+        shippingTable.style.display = "block";
+        shippingEditButton.style.display = "block";
+        shippingForm.style.display = "none";
+    });
+    
+</script>
+
+
+<script>
+    const billingEditButton = document.getElementById("billing-edit-btn");
+    const billingTable = document.getElementById("billing-table");
+    const billingForm = document.getElementById("billing-form");
+
+    const billingGetTable1 = document.getElementById("billing-get-table").rows[0].cells[1].innerHTML
+    const billingGetTable2 = document.getElementById("billing-get-table").rows[1].cells[1].innerHTML
+    const billingGetTable3 = document.getElementById("billing-get-table").rows[2].cells[1].innerHTML
+    const billingGetTable4 = document.getElementById("billing-get-table").rows[3].cells[1].innerHTML
+    const billingGetTable5 = document.getElementById("billing-get-table").rows[4].cells[1].innerHTML
+    
+    const billingAddressField1 = document.getElementById("billing-street-address");
+    const billingAddressField2 = document.getElementById("billing-apartment-address");
+    const billingAddressField3 = document.getElementById("billing-zip");
+    const billingAddressField4 = document.getElementById("billing-state");
+    const billingAddressField5 = document.getElementById("id_billing_country");
+
+    const billingCancelButton = document.getElementById("billing-cancel-btn");
+
+    billingEditButton.addEventListener("click", function() {
+        billingTable.style.display = "none";
+        billingEditButton.style.display = "none";
+        // shippingForm.style.display = "none";
+        // shippingTable.style.display = "block";
+        // shippingEditButton.style.display = "block";
+        billingForm.style.display = "block";
+
+        infoForm.style.display = "none";
+        infoTable.style.display = "block";
+        infoEditButton.style.display = "block";
+
+        billingAddressField1.value = billingGetTable1;
+        billingAddressField2.value = billingGetTable2;
+        billingAddressField3.value = billingGetTable3;
+        billingAddressField4.value = billingGetTable4;
+        billingAddressField5.value = billingGetTable5;
+    });
+
+    billingCancelButton.addEventListener("click", function() {
+        billingTable.style.display = "block";
+        billingEditButton.style.display = "block";
+        billingForm.style.display = "none";
+    });
+    
+</script>
+
+{% endblock content %}

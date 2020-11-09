@@ -1,0 +1,26 @@
+<div class="row">
+        
+    {% for item in categories %}
+    <div class="col-md-4 col-sm-4">
+      <!-- <a class="banner banner-1 ps-offer" href="#">
+        <img class="card-img-top" src="{{ item.image }}" alt="Card image cap">
+
+        <div class="card-body">
+          <h5 class="card-title">{{item.title}}</h5>
+          <p class="card-text">{{item.description}}</p>
+          
+        </div>
+      </a> -->
+      <div class="ps-offer">
+        <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="{{ item.get_absolute_url }}"><img src="{{ item.image }}" alt=""></a></div>
+        <br>
+        <div class="ps-post" style="text-align: center;"><a class="ps-post__title" href="">{{item.get_title_display}}</a>
+          <!-- <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p> -->
+          <p>{{item.description}}</p>
+          <!-- <a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a> -->
+        </div>
+      </div>
+    </div>
+    {% endfor %} 
+
+  </div>
