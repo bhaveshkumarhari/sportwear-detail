@@ -25,7 +25,7 @@ SECRET_KEY = 'mv72o-!wo7nlks!(&z0o!5876225tn%3uw7$o6_y^+=edrcb=@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://sportswear-arena.herokuapp.com/', '127.0.0.1']
 
 
 # Application definition
